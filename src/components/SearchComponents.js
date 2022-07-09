@@ -74,7 +74,6 @@ const SearchComponents = () => {
     //const results = !search ? users : users.filter((dato)=> dato.name.toLowerCase().includes(search.toLocaleLowerCase()))
 
     useEffect(()=>{
-        Welcome()
         showData()
         showProgramas()
         showPeriodos()
