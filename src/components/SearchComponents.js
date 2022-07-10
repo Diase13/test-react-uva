@@ -10,7 +10,7 @@ const SearchComponents = () => {
     const [periodos, setPeriodos] = useState([])
     const [programas, setProgramas] = useState([])
     //funcion para traer los datos de la API para
-    const URL = 'http://localhost:3000/students/1/202202'
+    //const URL = 'http://localhost:3000/students/1/202202'
     const URL1 = 'http://localhost:3000/students/periodos'
     const URL2 = 'http://localhost:3000/students/programas'
 
@@ -78,7 +78,8 @@ const SearchComponents = () => {
         results = users
     }else {
         results = users.filter( (dato) => 
-        dato.nombres.toLowerCase().includes(search.toLocaleLowerCase())
+        dato.nombres.toLowerCase().includes(search.toLocaleLowerCase()) || 
+        dato.apellidos.toLowerCase().includes(search.toLocaleLowerCase())
         )
     }
     //Metodo 2
@@ -117,7 +118,7 @@ const SearchComponents = () => {
                 </div>
                 <div className="col-md-3">
                     <label  className="form-label" >Nombre</label>
-                    <input value={search} onChange={searcher} type="text" placeholder="Search" className='form-control'/>
+                    <input value={search} onChange={searcher} type="text" placeholder="Buscar" className='form-control'/>
                    
                 </div>
                 <div className="col-md-3">
