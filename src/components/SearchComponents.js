@@ -94,64 +94,69 @@ const SearchComponents = () => {
     //renderizamos la vista
   return (
     <div>
-        <div className="">
-            <form className="row g-3 needs-validation" onSubmit={handleSubmit}>
-                <div className="col-md-3">
-                    <label  className="form-label">Carrera</label>
-                    <select className="form-select" value={pro} onChange={progra} defaultValue={''} required>
-                        <option value={''} disabled>Seleccione una Carrera/Programa</option>
-                        { programas.map( (programa) => (
-                            <option key={programa.av_pro_id} value={programa.av_pro_id}>{programa.av_pro_nombre}</option>
+        <div class="card">
+           
+            <div class="card-body">
+                <h5 class="card-title text-center p0">LISTADO DE ALUMNOS POR CARRERA Y PERIODO  </h5>
+                <hr></hr>
+                <br></br>
+                <form className="row g-3 needs-validation mt-3" onSubmit={handleSubmit}>
+                    <div className="col-md-3">
+                        <label  className="form-label">Carrera</label>
+                        <select className="form-select" value={pro} onChange={progra} defaultValue={''} required>
+                            <option value={''} disabled>Seleccione una Carrera/Programa</option>
+                            { programas.map( (programa) => (
+                                <option key={programa.av_pro_id} value={programa.av_pro_id}>{programa.av_pro_nombre}</option>
+                            ))}
+                        </select>
+                    
+                    </div>
+                    <div className="col-md-3">
+                        <label  className="form-label">Periodo</label>
+                        <select className=" form-select" value={peri} onChange={per} required defaultValue={''}>
+                            <option value={''}  disabled>Seleccione un Periodo</option>
+                            { periodos.map( (periodo) => (
+                                <option key={periodo.av_cic_id} value={periodo.av_periodo}>{periodo.av_periodo}</option>
+                            ))}
+                        </select>
+                    
+                    </div>
+                    <div className="col-md-3">
+                        <label  className="form-label" >Nombre</label>
+                        <input value={search} onChange={searcher} type="text" placeholder="Buscar" className='form-control'/>
+                    
+                    </div>
+                    <div className="col-md-3">
+                        <button type='submit' className='btn btn-light mt-4'>Buscar</button>            
+                    </div>
+                    
+                </form>
+                <table className="table table-striped table-hover mt-4 shadow-lg">
+                    <thead>
+                        <tr className="bg-dark text-white">
+                            <th>#</th>
+                            <th>Nro. Documento</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Carrera</th>
+                            <th>Periodo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { results.map( (user,index) => (
+                            <tr key={user.av_per_doc_num}>
+                                <td>{index+1}</td>
+                                <td>{user.av_per_doc_num}</td>
+                                <td>{user.nombres}</td>
+                                <td>{user.apellidos}</td>
+                                <td>{user.av_pro_nombre}</td>
+                                <td>{user.av_periodo}</td>
+                            </tr>
                         ))}
-                    </select>
-                   
-                </div>
-                <div className="col-md-3">
-                    <label  className="form-label">Periodo</label>
-                    <select className=" form-select" value={peri} onChange={per} required defaultValue={''}>
-                        <option value={''}  disabled>Seleccione un Periodo</option>
-                        { periodos.map( (periodo) => (
-                            <option key={periodo.av_cic_id} value={periodo.av_periodo}>{periodo.av_periodo}</option>
-                        ))}
-                    </select>
-                   
-                </div>
-                <div className="col-md-3">
-                    <label  className="form-label" >Nombre</label>
-                    <input value={search} onChange={searcher} type="text" placeholder="Buscar" className='form-control'/>
-                   
-                </div>
-                <div className="col-md-3">
-                    <button type='submit' className='btn btn-light mt-4'>Buscar</button>            
-                </div>
-                
-            </form>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        
-        <table className="table table-striped table-hover mt-5 shadow-lg">
-            <thead>
-                <tr className="bg-curso text-white">
-                    <th>#</th>
-                    <th>Nro. Documento</th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Carrera</th>
-                    <th>Periodo</th>
-                </tr>
-            </thead>
-            <tbody>
-                { results.map( (user,index) => (
-                    <tr key={user.av_per_doc_num}>
-                        <td>{index+1}</td>
-                        <td>{user.av_per_doc_num}</td>
-                        <td>{user.nombres}</td>
-                        <td>{user.apellidos}</td>
-                        <td>{user.av_pro_nombre}</td>
-                        <td>{user.av_periodo}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
     </div>
   )
 }
