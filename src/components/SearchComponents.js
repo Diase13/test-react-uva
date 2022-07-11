@@ -10,13 +10,13 @@ const SearchComponents = () => {
     const [periodos, setPeriodos] = useState([])
     const [programas, setProgramas] = useState([])
     //funcion para traer los datos de la API para
-    //const URL = 'http://localhost:3000/students/1/202202'
-    const URL1 = 'http://localhost:3000/students/periodos'
-    const URL2 = 'http://localhost:3000/students/programas'
+    //const URL = 'http://localhost:3020/students/1/202202'
+    const URL1 = 'http://localhost:3020/students/periodos'
+    const URL2 = 'http://localhost:3020/students/programas'
 
     // useEffect(()=>{
     //     axios
-    //     .get(`http://localhost:3000/students/${pro}/${peri}`)
+    //     .get(`http://localhost:3020/students/${pro}/${peri}`)
     //     .then(response => {
     //     //console.log(response)
     //     setUsers(response)
@@ -63,7 +63,7 @@ const SearchComponents = () => {
     const handleSubmit =( e ) => {
         e.preventDefault();
         axios
-            .get(`http://localhost:3000/students/${pro}/${peri}`)
+            .get(`http://localhost:3020/students/${pro}/${peri}`)
             .then(response => {
                 //console.log(response)
                 setUsers(response.data)
