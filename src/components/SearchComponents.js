@@ -35,85 +35,52 @@ const SearchComponents = () => {
 
     const showProgramas = async () => {
         axios
-            .get(`${baseUrl}/students/programas`, config)
-            .then(response => {
-                //console.log(response)
-                setProgramas(response.data)
-            })
-        // const response = await fetch(URL2)
-        // const data = await response.json()
-        // //console.log(data)
-        // setProgramas(data)
+        .get(`${baseUrl}/students/programas`, config)
+        .then(response => {
+            //console.log(response)
+            setProgramas(response.data)
+        })
     }
 
     const showPeriodos = async () => {
         axios
-            .get(`${baseUrl}/students/periodos` , config)
-            .then(response => {
-                //console.log(response)
-                setPeriodos(response.data)
-            })
-        // const response = await fetch(URL1)
-        // const data = await response.json()
-        // //console.log(data)
-        // setPeriodos(data)
+        .get(`${baseUrl}/students/periodos` , config)
+        .then(response => {
+            //console.log(response)
+            setPeriodos(response.data)
+        })
     }
-
-    //funcion de busqueda
-    // const searcher = (e) => {
-    //     setSearch(e.target.value)
-    //     //console.log(e.target.value)
-    // }
-
     const progra = (e) => {
         setPro(e.target.value)
-        //console.log(e.target.value)
     }
 
     const per = (e) => {
         setPeri(e.target.value)
-        //console.log(e.target.value)
     }
 
     const handleSubmit =( e ) => {
         e.preventDefault();
         axios
-            .get(`${baseUrl}/students/${pro}/${peri}` , config)
-            .then(response => {
-                //console.log(response)
-                setUsers(response.data)
-            })
-       
+        .get(`${baseUrl}/students/${pro}/${peri}` , config)
+        .then(response => {
+            setUsers(response.data)
+        })
     }
 
     const columns = [
         { field: 'av_per_doc_num', 
-        headerName: 'Nro Documento', 
-        cellClassName: 'super-app-theme--cell', 
-        width: 200 
+            headerName: 'Nro Documento', 
+            cellClassName: 'super-app-theme--cell', 
+            minwidth: 100,
+            flex: 1, 
         },
-        { field: 'nombres', headerName: 'Nombre', width: 150 },
-        { field: 'apellidos', headerName: 'Apellidos', width: 150 },
-        { field: 'av_pro_nombre', headerName: 'Carrera', width: 380 },
-        { field: 'av_periodo', headerName: 'Periodo', width: 130 },
+        { field: 'nombres', headerName: 'Nombre', minwidth: 150,  flex: 1, },
+        { field: 'apellidos', headerName: 'Apellidos', width: 150, flex: 1, },
+        { field: 'av_pro_nombre', headerName: 'Carrera', minwidth: 300, flex: 2  },
+        { field: 'av_periodo', headerName: 'Periodo', minwidth: 130,  flex: 0.5, },
     ];
 
-    //metodo de filtrado
-    //Metodo 1
-    // let results = []
-    // if (!search) {
-    //     results = users
-    // }else {
-    //     results = users.filter( (dato) => 
-    //     dato.nombres.toLowerCase().includes(search.toLocaleLowerCase()) || 
-    //     dato.apellidos.toLowerCase().includes(search.toLocaleLowerCase())
-    //     )
-    // }
-    //Metodo 2
-    //const results = !search ? users : users.filter((dato)=> dato.name.toLowerCase().includes(search.toLocaleLowerCase()))
-
     useEffect(()=>{
-        // showData()
         showProgramas()
         showPeriodos()
     }, [])
@@ -122,55 +89,51 @@ const SearchComponents = () => {
   return (
     <div>
         <div className="card">
-           
             <div className="card-body">
                 <h5 className="card-title text-center p0">LISTADO DE ALUMNOS POR CARRERA Y PERIODO  </h5>
                 <hr></hr>
                 <br></br>
                 <form className="row g-3 needs-validation mt-3" onSubmit={handleSubmit}>
-                    <div className="col-md-3">
+                    <div className="col-md-4">
                         <Autocomplete
-                        disablePortal
-                        getOptionLabel={(programa) => programa.av_pro_nombre}
-                        onChange={progra}
-                        id="combo-box-demo"
-                        options={programas}
-                        sx={{ width: 300 }}
-                        renderOption={(props, programa) => (
-                            <Box component="li" {...props} key={programa.av_pro_id} value={programa.av_pro_id}>
-                            {programa.av_pro_nombre}
-                            </Box>
-                        )}
-                        renderInput={(params) => <TextField {...params} label="Carrera" />}
+                            disablePortal
+                            getOptionLabel={(programa) => programa.av_pro_nombre}
+                            onChange={progra}
+                            id="combo-box-demo"
+                            options={programas}
+                            sx={{ width: 300 }}
+                            renderOption={(props, programa) => (
+                                <Box component="li" {...props} key={programa.av_pro_id} value={programa.av_pro_id}>
+                                {programa.av_pro_nombre}
+                                </Box>
+                            )}
+                            renderInput={(params) => <TextField {...params} label="Carrera"  size="small" required />}
                         />
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-4">
                         <Autocomplete
-                        disablePortal
-                        getOptionLabel={(periodo) => periodo.av_periodo}
-                        onChange={per}
-                        id="combo-box-demo"
-                        options={periodos}
-                        sx={{ width: 300 }}
-                        renderOption={(props, periodo) => (
-                            <Box component="li" {...props} key={periodo.av_cic_id} value={periodo.av_periodo}>
-                            {periodo.av_periodo}
-                            </Box>
-                        )}
-                        renderInput={(params) => <TextField {...params} label="Carrera" />}
+                            disablePortal
+                            getOptionLabel={(periodo) => periodo.av_periodo}
+                            onChange={per}
+                            id="combo-box-demo"
+                            options={periodos}
+                            sx={{ width: 300 }}
+                            renderOption={(props, periodo) => (
+                                <Box component="li" {...props} key={periodo.av_cic_id} value={periodo.av_periodo}>
+                                {periodo.av_periodo}
+                                </Box>
+                            )}
+                            renderInput={(params) => <TextField {...params} label="Periodo" size="small" required />}
                         />
                     </div>
-                    {/* <div className="col-md-3">
-                        <label  className="form-label" >Nombre</label>
-                        <input value={search} onChange={searcher} type="text" placeholder="Buscar" className='form-control'/>
-                    </div> */}
+                 
                     <div className="col-md-3">
-                        <button type='submit' className='btn btn-light mt-4'>Buscar</button>            
+                        <button type='submit' className='btn btn-dark '>Buscar</button>            
                     </div>
                     
                 </form>
                 <br></br>
-                <Box sx={{ height: 600, width: '100%' }}>
+                <Box sx={{ height: 700, width: '100%' }}>
                 <DataGrid
                     disableColumnFilter
                     disableColumnSelector
@@ -181,38 +144,14 @@ const SearchComponents = () => {
                     components={{ Toolbar: GridToolbar }}
                     componentsProps={{
                         toolbar: {
-                          showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
+                        showQuickFilter: true,
+                        quickFilterProps: { debounceMs: 500 },
                         },
                     }}
                     pageSize={20}
                     rowsPerPageOptions={[20]}
                 />
                 </Box>
-                {/* <table className="table table-striped table-hover mt-4 shadow-lg">
-                    <thead>
-                        <tr className="bg-dark text-white">
-                            <th>#</th>
-                            <th>Nro. Documento</th>
-                            <th>Nombre</th>
-                            <th>Apellidos</th>
-                            <th>Carrera</th>
-                            <th>Periodo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { results.map( (user,index) => (
-                            <tr key={user.av_per_doc_num}>
-                                <td>{index+1}</td>
-                                <td>{user.av_per_doc_num}</td>
-                                <td>{user.nombres}</td>
-                                <td>{user.apellidos}</td>
-                                <td>{user.av_pro_nombre}</td>
-                                <td>{user.av_periodo}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table> */}
             </div>
         </div>
     </div>
